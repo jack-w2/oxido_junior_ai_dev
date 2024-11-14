@@ -4,11 +4,13 @@ from dotenv import load_dotenv
 from markdown_it import MarkdownIt
 
 def get_article_text(article_file_path):
+    """Read article text from given path."""
     with open(article_file_path, 'r') as article_file:
         article_text = article_file.read()
     return article_text
 
 def extract_html(message_content):
+    """Find HTML code block in the given message and extract its contents."""
     md = MarkdownIt()
     parsed = md.parse(message_content)
     extracted_html = ''
@@ -35,8 +37,14 @@ def main():
     completion = client.chat.completions.create(
         model='gpt-4o-mini',
         messages=[
-            {"role": "system", "content": "You are a skilled web development assistant. Generate clean, well-structured HTML code with proper indentation, comments, and semantic tags when appropriate. Explain your code briefly if requested, and follow best practices for web accessibility and responsiveness."},
-            {"role": "system", "content": f"Please format this HTML code with the rules mentioned in the previous prompt. Return only the text inside the <body> tag without the tag itself. Here is the code:```{unformatted_article_text}```"}
+            {
+                "role": "system",
+                "content": "You are a skilled web development assistant. Generate clean, well-structured HTML code with proper indentation, comments, and semantic tags when appropriate. Explain your code briefly if requested, and follow best practices for web accessibility and responsiveness."
+            },
+            {
+                "role": "system",
+                "content": f"Please format this HTML code with the rules mentioned in the previous prompt. Return only the text inside the <body> tag without the tag itself. Here is the code:```{unformatted_article_text}```"
+            }
         ]
     )
 
