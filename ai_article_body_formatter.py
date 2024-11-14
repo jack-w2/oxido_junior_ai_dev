@@ -44,6 +44,10 @@ def main():
             {
                 "role": "system",
                 "content": f"Please format this HTML code with the rules mentioned in the previous prompt. Return only the text inside the <body> tag without the tag itself. Here is the code:```{unformatted_article_text}```"
+            },
+            {
+                "role": "system",
+                "content": "Please suggest places where to insert graphics in the HTML code from previous prompt. Mark such places with the img tags with the alt attribute which can be used for generating the graphic with AI. The img tags should also include the following src attribute ```src='image_placeholder.jpg'```. Along with the images please insert captions. Wrap them together with the figure tag."
             }
         ]
     )
@@ -53,3 +57,6 @@ def main():
 
     with open('artykul.html', 'w') as article_file:
         article_file.write(formatted_article_text)
+
+if __name__ == "__main__":
+    main()
